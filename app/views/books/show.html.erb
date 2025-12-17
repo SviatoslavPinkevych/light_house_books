@@ -1,0 +1,84 @@
+<div class="book-show">
+
+  <% if @book.image.attached? %>
+    <div style="margin-bottom: 20px;">
+      <%= image_tag @book.image.variant(resize_to_fill: [300, 420]) %>
+    </div>
+  <% end %>
+
+  <h1><%= @book.title %></h1>
+  <p class="author"><strong>Автор:</strong> <%= @book.author %></p>
+  <p class="price"><strong>Ціна:</strong> <%= @book.price %> грн</p>
+
+  <div class="show-actions">
+
+    <%= link_to "Замовити", book_order_path(@book), class: "btn action-btn" %>
+
+    <%= link_to "Додати в кошик",
+                add_to_cart_path(@book),
+                data: { turbo_method: :post },
+                class: "btn action-btn" %>
+
+    <%= link_to "Назад", books_path, class: "btn action-btn" %>
+
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to "Редагувати", edit_book_path(@book), class: "btn action-btn" %>
+
+      <%= link_to "Видалити",
+                  book_path(@book),
+                  data: { turbo_method: :delete, turbo_confirm: "Видалити книгу?" },
+                  class: "btn action-btn delete" %>
+    <% end %>
+
+  </div>
+
+
+  <hr>
+  <hr class="divider">
+
+  <h3 class="reviews-title">Відгуки</h3>
+
+  <div class="reviews-list">
+    <% if @book.reviews.any? %>
+      <% @book.reviews.each do |review| %>
+        <div class="review-card">
+          <div class="review-header">
+            <span class="review-user"><%= review.user.email %></span>
+
+            <span class="review-rating">
+              <% review.rating.times do %>⭐<% end %>
+              <span class="rating-num"><%= review.rating %>/5</span>
+            </span>
+          </div>
+
+          <p class="review-text"><%= review.comment %></p>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="no-reviews">Поки що відгуків немає.</p>
+    <% end %>
+  </div>
+
+  <% if user_signed_in? %>
+    <div class="review-form-card">
+      <h4>Залишити відгук</h4>
+
+      <%= form_with model: [@book, Review.new], local: true do |f| %>
+        <div class="review-form-grid">
+          <div>
+            <%= f.label :rating, "Оцінка" %>
+            <%= f.select :rating, 1..5 %>
+          </div>
+
+          <div class="full">
+            <%= f.label :comment, "Відгук" %>
+            <%= f.text_area :comment, rows: 3 %>
+          </div>
+        </div>
+
+        <%= f.submit "Залишити відгук", class: "btn" %>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>

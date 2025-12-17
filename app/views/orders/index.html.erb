@@ -1,0 +1,37 @@
+<h1 class="page-title">Мої замовлення</h1>
+
+<div class="orders-container">
+
+  <% if @orders.empty? %>
+    <p>У вас ще немає замовлень.</p>
+
+  <% else %>
+    <% @orders.each do |order| %>
+      <div class="order-item">
+
+        <h3>Замовлення № <%= order.id %></h3>
+
+        <p><strong>Книга:</strong> <%= order.book.title %></p>
+        <p><strong>Автор:</strong> <%= order.book.author %></p>
+        <p><strong>Ціна:</strong> <%= order.book.price %> грн</p>
+
+        <hr>
+
+        <h4>Дані покупця</h4>
+
+        <p><strong>Ім’я:</strong> <%= order.first_name %></p>
+        <p><strong>Прізвище:</strong> <%= order.last_name %></p>
+        <p><strong>Телефон:</strong> <%= order.phone %></p>
+        <p><strong>Спосіб доставки:</strong> <%= order.delivery_method %></p>
+        <p><strong>Адреса:</strong> <%= order.address.presence || "Не вказано" %></p>
+
+        <hr>
+
+        <p><strong>Статус:</strong>
+          <span class="status-badge"><%= order.status || "Очікує підтвердження" %></span>
+        </p>
+      </div>
+    <% end %>
+  <% end %>
+
+</div>

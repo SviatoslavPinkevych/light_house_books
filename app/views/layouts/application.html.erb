@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "LightHouse Books" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Untitledtest">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+    <%= javascript_importmap_tags %>
+
+  </head>
+
+  <body>
+  <nav class="main-nav">
+
+    <div class="nav-left">
+      <%= link_to "Головна сторінка", books_path, class: "btn"%>
+      <%= link_to "Кошик", cart_path, class: "btn" %>
+      <%= link_to "Контакти", new_contact_message_path, class: "btn" %>
+      <% if user_signed_in? %>
+        <%= link_to "Замовлення", orders_path, class: "btn" %>
+      <% end %>
+    </div>
+
+    <div class="nav-right">
+      <% if user_signed_in? %>
+        <span class="welcome">Вітаю, <%= current_user.email %></span>
+        <%= link_to "Вийти", destroy_user_session_path, data: { turbo_method: :delete }, class: "btn small" %>
+      <% else %>
+        <%= link_to "Увійти", new_user_session_path, class: "btn small" %>
+      <% end %>
+    </div>
+
+  </nav>
+
+  <div class="center-container">
+    <% if notice.present? %>
+      <p class="notice"><%= notice %></p>
+    <% end %>
+
+    <% if alert.present? %>
+      <p class="alert"><%= alert %></p>
+    <% end %>
+
+    <%= yield %>
+  </div>
+  </body>
+
+</html>

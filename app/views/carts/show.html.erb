@@ -1,0 +1,73 @@
+<h1 class="page-title">Ваш кошик</h1>
+
+<div class="cart-container">
+
+  <% if @books.empty? %>
+    <p class="empty-cart">Кошик порожній.</p>
+
+  <% else %>
+
+    <!-- 📚 СПИСОК КНИГ У КОШИКУ -->
+    <div class="cart-items-list">
+      <% @books.each do |book| %>
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <h3 class="cart-title"><%= book.title %></h3>
+            <p class="cart-price"><%= book.price %> грн</p>
+          </div>
+
+          <%= button_to "Прибрати",
+                        remove_from_cart_path(book),
+                        method: :post,
+                        class: "btn delete small" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- 🔥 СЮДИ СТАВИШ СВІЙ КОД -->
+    <hr class="cart-divider">
+
+    <h2 class="section-title">Оформлення замовлення на всі книги</h2>
+
+    <div class="cart-order-card">
+      <%= form_with url: checkout_cart_path, local: true do |f| %>
+
+        <div class="cart-order-grid">
+          <div>
+            <%= f.label :first_name, "Ім'я" %>
+            <%= f.text_field :first_name %>
+          </div>
+
+          <div>
+            <%= f.label :last_name, "Прізвище" %>
+            <%= f.text_field :last_name %>
+          </div>
+
+          <div>
+            <%= f.label :phone, "Телефон" %>
+            <%= f.text_field :phone %>
+          </div>
+
+          <div>
+            <%= f.label :delivery_method, "Спосіб доставки" %>
+            <%= f.select :delivery_method, ["Нова Пошта", "УкрПошта", "Кур'єр"] %>
+          </div>
+
+          <div class="full">
+            <%= f.label :address, "Адреса" %>
+            <%= f.text_field :address %>
+          </div>
+
+          <div class="full">
+            <%= f.label :payment_method, "Спосіб оплати" %>
+            <%= f.select :payment_method, ["Карткою", "Готівкою при отриманні"] %>
+          </div>
+        </div>
+
+        <%= f.submit "Оформити замовлення", class: "btn cart-order-submit" %>
+
+      <% end %>
+    </div>
+
+  <% end %>
+</div>

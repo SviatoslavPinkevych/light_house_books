@@ -1,0 +1,43 @@
+<div class="book-form-container">
+  <%= form_with(model: book, html: { class: "book-form" }, local: true) do |form| %>
+
+    <% if book.errors.any? %>
+      <div class="error-messages">
+        <h2><%= pluralize(book.errors.count, "error") %> prevented this book from being saved:</h2>
+        <ul>
+          <% book.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :title, "Назва книги" %>
+      <%= form.text_field :title %>
+    </div>
+
+    <div>
+      <%= form.label :author, "Автор" %>
+      <%= form.text_field :author %>
+    </div>
+
+    <div>
+      <%= form.label :price, "Ціна (грн)" %>
+      <%= form.number_field :price, step: 0.01 %>
+    </div>
+
+    <div>
+      <%= form.label :image, "Обкладинка книги" %>
+      <%= form.file_field :image, accept: "image/*" %>
+
+      <% if book.image.attached? %>
+        <div class="preview">
+          <%= image_tag book.image.variant(resize_to_fill: [150, 200]) %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= form.submit "Зберегти книгу" %>
+  <% end %>
+</div>

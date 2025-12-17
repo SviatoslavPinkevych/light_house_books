@@ -1,0 +1,46 @@
+<h1 class="page-title">Каталог книг</h1>
+
+<div class="shop-header">
+  <form method="get" action="/books" class="search-form">
+    <input type="text" name="q" placeholder="Пошук книги..." value="<%= params[:q] %>">
+    <button type="submit" class=btn" >Знайти</button>
+  </form>
+
+  <% if user_signed_in? && current_user.admin? %>
+    <%= link_to "Додати книгу", new_book_path, class: "btn add-btn" %>
+  <% end %>
+</div>
+
+<div class="books-grid">
+  <% @books.each do |book| %>
+    <div class="book-card">
+
+      <div class="book-img">
+        <% if book.image.attached? %>
+          <%= image_tag book.image.variant(resize_to_fill: [240, 320]), class: "cover" %>
+        <% else %>
+          <img src="/placeholder-book.png" class="cover" alt="No image">
+        <% end %>
+      </div>
+
+      <div class="book-info">
+        <h3><%= book.title %></h3>
+        <p class="author"><%= book.author %></p>
+        <p class="price"><%= book.price %> грн</p>
+      </div>
+
+      <div class="actions">
+        <%= link_to "Переглянути", book, class: "btn small" %>
+        <%= button_to "В кошик", add_to_cart_path(book), method: :post, class: "btn small" %>
+
+        <% if user_signed_in? && current_user.admin? %>
+
+          <%= link_to "Видалити", book_path(book),
+                      data: { turbo_method: :delete, turbo_confirm: "Видалити?" },
+                      class: "btn small delete" %>
+        <% end %>
+      </div>
+
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,59 @@
+<h1 class="page-title">Оформлення замовлення</h1>
+
+<div class="order-page">
+
+  <% if @book %>
+    <div class="order-book-card">
+      <div class="order-book-img">
+        <%= image_tag @book.image.variant(resize_to_fill: [160, 220]) if @book.image.attached? %>
+      </div>
+
+      <div class="order-book-info">
+        <h3><%= @book.title %></h3>
+        <p class="author"><%= @book.author %></p>
+        <p class="price"><strong><%= @book.price %> грн</strong></p>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="order-form-card">
+    <%= form_with(model: @order, url: request.fullpath, local: true) do |f| %>
+
+      <div class="order-grid">
+        <div>
+          <%= f.label :first_name, "Імʼя" %>
+          <%= f.text_field :first_name %>
+        </div>
+
+        <div>
+          <%= f.label :last_name, "Прізвище" %>
+          <%= f.text_field :last_name %>
+        </div>
+
+        <div>
+          <%= f.label :phone, "Номер телефону" %>
+          <%= f.text_field :phone %>
+        </div>
+
+        <div>
+          <%= f.label :delivery_method, "Спосіб доставки" %>
+          <%= f.select :delivery_method, ["Нова Пошта", "УкрПошта", "Курʼєр"] %>
+        </div>
+
+        <div class="full">
+          <%= f.label :address, "Адреса доставки" %>
+          <%= f.text_field :address %>
+        </div>
+
+        <div class="full">
+          <%= f.label :payment_method, "Спосіб оплати" %>
+          <%= f.select :payment_method, ["Карткою", "Готівкою при отриманні"] %>
+        </div>
+      </div>
+
+      <%= f.submit "Підтвердити замовлення", class: "btn order-submit" %>
+
+    <% end %>
+  </div>
+
+</div>

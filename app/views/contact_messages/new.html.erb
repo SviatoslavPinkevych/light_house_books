@@ -1,0 +1,24 @@
+<h1 class="page-title contact-title">Зворотній звʼязок</h1>
+
+<div class="contact-container">
+  <%= form_with model: @message, local: true, class: "contact-form" do |f| %>
+
+    <div class="contact-field">
+      <%= f.label :name, "Імʼя" %>
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="contact-field">
+      <%= f.label :email, "Email" %>
+      <%= f.email_field :email %>
+    </div>
+
+    <div class="contact-field">
+      <%= f.label :message, "Повідомлення" %>
+      <%= f.text_area :message, rows: 4 %>
+    </div>
+
+    <%= f.submit "Надіслати", class: "btn" %>
+
+  <% end %>
+</div>

@@ -1,0 +1,31 @@
+<div class="auth-wrapper">
+  <div class="auth-box">
+    <h2>Вхід</h2>
+
+    <%= form_with scope: :user, url: session_path(:user), local: true do |f| %>
+
+      <div>
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true %>
+      </div>
+
+      <div>
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: "current-password" %>
+      </div>
+
+      <div class="auth-remember">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me, "Запам'ятати мене" %>
+      </div>
+
+      <%= f.submit "Увійти" %>
+
+    <% end %>
+
+    <div class="auth-links">
+      <%= link_to "Реєстрація", new_user_registration_path %>
+      <%= link_to "Забули пароль?", new_user_password_path %>
+    </div>
+  </div>
+</div>
