@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_17_020438) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_17_060751) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -60,13 +60,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_17_020438) do
 
   create_table "orders", force: :cascade do |t|
     t.string "address"
-    t.string "adress"
     t.bigint "book_id", null: false
     t.datetime "created_at", null: false
     t.string "delivery_method"
-    t.string "first_Name"
     t.string "first_name"
-    t.string "last_Name"
     t.string "last_name"
     t.boolean "paid"
     t.string "payment_method"

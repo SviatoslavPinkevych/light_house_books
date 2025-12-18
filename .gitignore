@@ -33,3 +33,17 @@
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+/db/migrate/
+/db/migrate/20251204155837_create_users.rb
+/db/migrate/20251204160032_add_devise_to_users.rb
+/db/migrate/20251204160333_create_books.rb
+/db/migrate/20251210165147_create_active_storage_tables.active_storage.rb
+/db/migrate/20251210183221_add_role_to_users.rb
+/db/migrate/20251210193441_create_orders.rb
+/db/migrate/20251210200209_add_fields_to_orders.rb
+/db/migrate/20251217014127_create_reviews.rb
+/db/migrate/20251217014841_add_book_and_user_to_reviews.rb
+/db/migrate/20251217015626_rename_raitiong_to_rating_in_reviews.rb
+/db/migrate/20251217015835_add_payment_to_orders.rb
+/db/migrate/20251217020438_create_contact_messages.rb
+/db/migrate/20251217060751_fix_orders_columns.rb
